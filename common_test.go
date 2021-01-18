@@ -1,4 +1,4 @@
-package main
+package zappretty
 
 import (
 	"bufio"
@@ -11,7 +11,7 @@ func executeProcessorTest(lines []string, options ...processorOption) *bytes.Buf
 	reader := bytes.NewReader([]byte(strings.Join(lines, "\n")))
 	writer := &bytes.Buffer{}
 
-	processor := &processor{
+	processor := &Processor{
 		scanner: bufio.NewScanner(reader),
 		output:  writer,
 	}
@@ -20,7 +20,7 @@ func executeProcessorTest(lines []string, options ...processorOption) *bytes.Buf
 		opt.apply(processor)
 	}
 
-	processor.process()
+	processor.Process()
 	return writer
 }
 

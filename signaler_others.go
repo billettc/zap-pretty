@@ -1,6 +1,6 @@
 //+build darwin linux
 
-package main
+package zappretty
 
 import (
 	"os"
@@ -25,7 +25,7 @@ func NewSignaler() *signaler {
 	return signaler
 }
 
-func (s *signaler) forwardAllSignalsToProcessGroup() {
+func (s *signaler) ForwardAllSignalsToProcessGroup() {
 	signalChan := make(chan os.Signal, 1)
 	signal.Notify(signalChan)
 

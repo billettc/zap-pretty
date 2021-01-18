@@ -1,4 +1,4 @@
-package main
+package zappretty
 
 import (
 	"bufio"
@@ -20,7 +20,7 @@ func BenchmarkZapdriver(b *testing.B) {
 	b.SetBytes(byteCount)
 
 	for n := 0; n < b.N; n++ {
-		processor.process()
+		processor.Process()
 		reset()
 	}
 }
@@ -30,18 +30,18 @@ func TestBenchmarkCode(t *testing.T) {
 	defer cleanup()
 
 	// This test can be run in verbose mode to ensure the actual benchmark code works as expected
-	processor.process()
+	processor.Process()
 	reset()
-	processor.process()
+	processor.Process()
 	reset()
 }
 
-func preprareBenchmark(output io.Writer) (proc *processor, byteCount int64, reset func(), cleanup func()) {
+func preprareBenchmark(output io.Writer) (proc *Processor, byteCount int64, reset func(), cleanup func()) {
 	debugBackup := debug
 	debug = log.New(ioutil.Discard, "", 0)
 
 	reader := bytes.NewReader([]byte(strings.Join(benchmarkZapdriverLines(), "\n")))
-	proc = &processor{scanner: bufio.NewScanner(reader), output: output}
+	proc = &Processor{scanner: bufio.NewScanner(reader), output: output}
 
 	return proc, reader.Size(), func() { reader.Seek(0, io.SeekStart) }, func() { debug = debugBackup }
 }

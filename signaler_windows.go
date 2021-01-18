@@ -1,4 +1,4 @@
-package main
+package zappretty
 
 import (
 	"golang.org/x/sys/windows"
@@ -42,7 +42,6 @@ func handleConsoleCtrlEvent(events chan<- uint) error {
 		events <- ctrlType
 		return 0
 	}
-
 
 	n, _, err := setConsoleCtrlHandler.Call(windows.NewCallback(callback), 1)
 	if n == 0 {
